@@ -1,0 +1,21 @@
+Because of its statistical and graphical capabilities, R has become part of the
+actuarial toolkit. However, actuaries often lack systematic training in
+efficient data manipulation in R.
+
+In this session, we will review fundamental R data structures and their
+application to insurance data. Participants will learn to perform basic
+actuarial procedure using modern data manipulation librairies (tidyverse).
+
+Five modules will cover different aspects of a reserving and ratemaking
+workflow (policy/claim data manipulation, rating, loss development,
+indications), with examples taken from CAS Exam 5 study notes (Werner, Appendix
+C). In each module, participants will discuss practical R programming problems
+in small groups.
+
+Participants will gain a better grasp of R data structures and their
+application to insurance data. They will be able to script data manipulation
+pipelines to perform routine actuarial procedures.
+
+Participants should have basic programming skills (not necessarily in R) and
+some experience performing basic actuarial procedures.
+
