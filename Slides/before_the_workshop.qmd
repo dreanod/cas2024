@@ -34,35 +34,34 @@ execute:
 
 ## Install the required packages
 
+### Install the `tidyverse` and `ChainLadder` packages
+
 Open the R console in RStudio and run the following command:
 
 ```r
-install.packages(c("tidyverse", "lubridate", "readxl", "openxlsx", "actuar"))
+install.packages(c("tidyverse", "ChainLadder"))
 ```
+
+### Test your setup
+
+Open the R console in RStudio and run the following command:
+
+```r
+library(tidyverse)
+library(ChainLadder)
+```
+
+### Troubleshooting
+
+If you encounter any issue, please reach out to me by email at:
+`denis.dreano@protonmail.ch`
 
 ## Download the workshop material
 
 1. Go to the [GitHub repository](0) of the workshop
 2. Click on the green button "Code" and select "Download ZIP"
 3. Unzip the downloaded file in a folder of your choice
-
-## Test your setup
-
-Open the R console in RStudio and run the following command:
-
-```r
-library(tidyverse)
-library(lubridate)
-library(readxl)
-library(openxlsx)
-library(actuar)
-```
-
-## Troubleshooting
-
-If you encounter any issue, please reach out to me by email at:
-
-`denis.dreano@protonmail.ch`
+4. Open the file `Actuarial-Data-Manipulation-with-R.Rproj` in RStudio
 
 ## Refresh your R skills
 

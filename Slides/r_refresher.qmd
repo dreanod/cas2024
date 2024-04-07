@@ -97,6 +97,15 @@ last_element <- numeric_vector[length(numeric_vector)]
 ```R
 combined_vector <- c(1:10, rep(0, 5))
 ```
+
+### Missing Values (`NA`)
+
+Missing values in R are represented by `NA`. They can be included in vectors.
+
+```R
+missing_vector <- c(1, 2, NA, 4, 5)
+```
+
 :::
 ::::
 

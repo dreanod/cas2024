@@ -64,11 +64,6 @@ earned_premium[1:3]
 # - year 4 to the end? (hint use the function length() to know that is the
 #   index of the last value)
 
-### Solution 1.1
-earned_premium[2:5]
-earned_premium[c(2, 4)]
-earned_premium[4:length(earned_premium)]
-
 #------ 1.2 Named Vectors ---------------------------------------------------
 
 # One problem with vectors is this is that you have to remember that index 1
@@ -88,10 +83,6 @@ earned_premium["2010"]
 # Hint: use the as.character() function to convert the years to character,
 # because the names of the vector are always characters.
 
-# Solution 1.2
-earned_premium[as.character(2011:2013)]
-earned_premium[c("2011", "2014")]
-
 # Named vectors provide more context to the values in the vector. But we will
 # see that data frames can do the same and are more powerful in practice.
 
@@ -101,9 +92,6 @@ earned_premium[c("2011", "2014")]
 # Let's now calculate the on-level premium. (Actual premium times the current
 # rate level factor). Here is the current rate level factor:
 crl_factor <- c(1.2029, 1.2058, 1.2724, 1.3019, 1.2390)
-
-### Solution 1.3
-onlevel_premium <- earned_premium * crl_factor
 
 # You might be tempted to use a for loop to do this.
 # There are two reasons why you should avoid using for loops in R:
@@ -122,21 +110,10 @@ net_trend_factor <- c(1.7907, 1.6444, 1.5100, 1.3866, 1.2732)
 # Calculate the projected ultimate loss and ALAE loss ratio for
 # every year?
 
-### Solution 1.4
-onlevel_ultimate_loss_lae <- ultimate_loss_alae * net_trend_factor
-projected_lr <- onlevel_ultimate_loss_lae / onlevel_premium
-projected_lr
-
 ### Exercise 1.5
 # Calculate the aggregated projected loss ratio (The dollar-weighted
 # projected ultimate loss and ALAE ratio for all years)
 # Hint: use the sum() function
-
-### Solution 1.5
-total_ol_ult_loss <- sum(onlevel_ultimate_loss_lae)
-total_ol_premium <- sum(onlevel_premium)
-total_projected_lr <- total_ol_ult_loss / total_ol_premium
-total_projected_lr
 
 ###### 2. Introducing data frames #############################################
 
@@ -183,10 +160,6 @@ indication_df$crl_factor <- c(1.2029, 1.2058, 1.2724, 1.3019, 1.2390)
 ### Exercise 2.1
 # Add a new column to indication_df with the on-level premium.
 
-### Solution 2.1
-indication_df$onlevel_premium <- indication_df$earned_premium * indication_df$crl_factor
-indication_df
-
 #------ 2.3 Modifying the columns with mutate() -------------------------
 
 # Do you notice how we repeat "indication_df$" three times?
@@ -214,21 +187,6 @@ indication_df
 #    * on-level ultimate loss and ALAE
 #    * projected ultimate loss and ALAE ratio
 
-### Solution 2.2
-indication_df <- tibble(
-  accident_year = 2010:2014,
-  earned_premium = c(14904664, 14494543, 14442449, 14834605, 18265093),
-  crl_factor = c(1.2029, 1.2058, 1.2724, 1.3019, 1.2390),
-  ultimate_loss_alae = c(11673500, 11200326, 6288433, 18257745, 23362601),
-  net_trend_factor = c(1.7907, 1.6444, 1.5100, 1.3866, 1.2732),
-)
-indication_df <- mutate(
-  indication_df,
-  onlevel_premium = earned_premium * crl_factor,
-  onlevel_loss_alae = ultimate_loss_alae * net_trend_factor,
-  projected_lr = onlevel_loss_alae / onlevel_premium
-)
-
 #------ 2.4 Selecting and renaming columns with select() --------------------
 
 # As you can see mutate() is quite a useful and flexible function. The dplyr
@@ -243,28 +201,6 @@ select(indication_df, calendar_year = accident_year, projected_lr)
 # 2) Rename and reorder the columns as they appear in the spreadsheet
 #    Hint: You can use non-syntactic names (eg names that contain spaces)
 #    by enclosing them in backticks (``)
-
-### Solution 2.3
-# 1)
-select(
-  indication_df,
-  accident_year,
-  onlevel_premium,
-  onlevel_loss_alae,
-  projected_lr
-)
-# 2)
-select(
-  indication_df,
-  `Calendar-Accident Year` = accident_year,
-  `Earned Premium` = earned_premium,
-  `Current Rate Level Factor` = crl_factor,
-  `Earned Premium @ CRL` = onlevel_premium,
-  `Ultimate Loss and ALAE` = ultimate_loss_alae,
-  `Net Trend Factor` = net_trend_factor,
-  `Projected Ultimate Loss and ALAE` = onlevel_loss_alae,
-  `Ultimate Loss and ALAE Ratio` = projected_lr
-)
 
 #------ 2.5 Summarizing data frames with summarize() ------------------------
 
@@ -284,14 +220,3 @@ summarize(
 # 1) Calculate the aggregated on-level earned premium, ultimate loss and
 # loss ratio:
 # 2) Can you also calculate the straight average projected LR?
-
-### Solution 2.4
-summarize(
-  indication_df,
-  earned_premium = sum(earned_premium),
-  onlevel_premium = sum(onlevel_premium),
-  ultimate_loss_alae = sum(ultimate_loss_alae),
-  onlevel_ultimate_loss_lae = sum(onlevel_ultimate_loss_lae),
-  straight_average_projected_lr = mean(projected_lr),
-  dollar_average_projected_lr = onlevel_ultimate_loss_lae / onlevel_premium
-)
