@@ -40,14 +40,6 @@ summary(policy_df)
 # 2) the total premium
 # 3) the total number of exposures
 
-### Solution 1.1
-summarize(
-  policy_df,
-  average_premium = mean(premium),
-  total_premium = sum(premium),
-  total_exposure = sum(n_expo)
-)
-
 #----- 1.4 Filter the data using filter() ----------------------------------
 
 # In general, statistics across many years are not very useful for actuarial
@@ -63,10 +55,6 @@ df <- filter(  # return a filtered data frame
 ### Exercise 1.2
 # Using filter and summarize(), calculate the average premium for policies
 # written in 2011.
-
-### Solution 1.2
-df <- filter(policy_df, year == 2011)
-summarize(df, average_premium = mean(premium))
 
 #------ 1.5 Introducing the pipe `|>` ---------------------------------------
 
@@ -85,11 +73,6 @@ summarize(df, average_premium = mean(premium))
 ### Exercise 1.3
 # Rewrite the filter and summarize operation above using the pipe:
 
-### Solution 1.3
-policy_df |>
-  filter(year == 2011) |>
-  summarize(average_premium = mean(premium))
-
 #------ 1.6 Grouping and summarizing ---------------------------------------
 
 # The summarize() function is useful to calculate statistics for the whole
@@ -107,13 +90,6 @@ policy_df |>
 # 1) written exposures for each year.
 # 2) written premium for each year.
 # 3) written policies for each year. (Hint: use n() in summarize()
-
-### Solution 1.4
-policy_df |>
-  group_by(year) |>
-  summarize(total_exposure = sum(n_expo),
-            total_premium = sum(premium),
-            total_policies = n())
 
 ####### 2. Calculating Earned Premium #######################################
 
@@ -135,19 +111,9 @@ end_of_year <- ymd("2010-12-31")
 # end of the year date with a date in the standard US format (mm/dd/yyyy).
 # Hint: the function name should start with m.
 
-### Solution 2.1
-end_of_year <- mdy("12/31/2010")
-
 ### Exercise 2.2
 # Filter the policies that are in-force in 2010, using the filter()
 # function.
-
-### Solution 2.2
-policy_df_2010 <- policy_df |>
-  filter(
-    inception_date <= end_of_year,
-    expiration_date >= start_of_year
-  )
 
 # If filter() is provided with multiple conditions, it will return
 # only the rows that satisfy all conditions.
@@ -157,13 +123,6 @@ policy_df_2010 <- policy_df |>
 # the earning period (begin_earn_date) and the end date of the earning period
 # (end_earn_date), over year 2010.
 # Hint: use the pmax() and pmin() functions from base R.
-
-### Solution 2.3
-policy_df_2010 <- policy_df_2010 |>
-  mutate(
-    begin_earn_date = pmax(start_of_year, inception_date),
-    end_earn_date = pmin(end_of_year, expiration_date)
-  )
 
 # To calculate a duration between two dates using the functions from lubridate,
 # there are two steps:
@@ -185,20 +144,8 @@ policy_df_2010 <- policy_df_2010 |>
 # 3) The ratio of policy earned in 2010 (nb_earn_days / policy_duration).
 # 4) The premium earned in 2010 for each policy.
 
-### Solution 2.4
-policy_df_2010 <- policy_df_2010 |>
-  mutate(
-    policy_duration = (inception_date %--% expiration_date) / days(1) + 1,
-    nb_earn_days = (begin_earn_date %--% end_earn_date) / days(1) + 1,
-    ratio_earned_policy = nb_earn_days / policy_duration,
-    earned_premium = ratio_earned_policy * premium
-  )
-
 ### Exercise 2.5
 # Calculate the total premium earned in 2010
-
-### Solution 2.5
-sum(policy_df_2010$earned_premium)
 
 #------ 2.2 Calculating earned premium for years 2010 to 2014 ---------------
 
@@ -217,19 +164,12 @@ sum(policy_df_2010$earned_premium)
 ### Exercise 2.6
 # Use map() to calculate the square of all numbers between 1 and 10
 
-### Solution 2.6
-square_fun <- function(x) x^2
-map(1:10, square_fun)
-
 # map() always returns a list. Generally, this is not what we want.
 # In this case, returning a vector of double is more appropriate.
 
 ### Exercise 2.7
 # Use the purrr cheatsheet to find which mapping function to use.
 # Hint: it is of the form map_*()
-
-### Solution 2.7
-map_dbl(1:10, square_fun)
 
 # In a lot of situations, it is very useful to return a data frame
 # because much more information can be returned in this way.
@@ -240,10 +180,6 @@ map_dbl(1:10, square_fun)
 # two columns, one for x and one for x squared.
 # Hint: you will have to modify the input function.
 
-### Solution 2.8
-square_df_fun <- function(x) tibble(x = x, x_square = x^2)
-map_dfr(1:10, square_df_fun)
-
 ### Exercise 2.9
 # Let's now use the previous mapping function to create a data
 # frame that has a column for the years (2010 to 2014) and a column
@@ -251,28 +187,3 @@ map_dfr(1:10, square_df_fun)
 # Hint: the input function should take one argument for the year.
 # Reuse the calculations for 2010 in the body of the function, just
 # make them general for any year.
-
-### Solution 2.9
-calculate_earned_premium <- function(year) {
-  start_of_year <- ymd(paste0(year, "-01-01"))
-  end_of_year <- ymd(paste0(year, "-12-31"))
-
-  df <- policy_df |>
-    filter(
-      inception_date <= end_of_year,
-      expiration_date >= start_of_year
-    ) |>
-    mutate(
-      begin_earn_date = pmax(start_of_year, inception_date),
-      end_earn_date = pmin(end_of_year, expiration_date),
-      nb_earn_days = (begin_earn_date %--% end_earn_date) / days(1) + 1,
-      policy_duration = (inception_date %--% expiration_date) / days(1) + 1,
-      ratio_earned_policy = nb_earn_days / policy_duration,
-      earned_premium = ratio_earned_policy * premium
-    )
-
-  earned_premium <- sum(df$earned_premium)
-
-  tibble(year = year, earned_premium = earned_premium)
-}
-map_dfr(2010:2014, calculate_earned_premium)

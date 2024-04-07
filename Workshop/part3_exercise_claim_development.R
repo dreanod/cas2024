@@ -29,24 +29,11 @@ transactions_df
 # strings. Use the mdy() function from the lubridate package to convert them
 # to date objects.
 
-### Solution 1.1
-transactions_df <- transactions_df |>
-  mutate(
-    accident_date = mdy(accident_date),
-    evaluation_date = mdy(evaluation_date)
-  )
-
 # In this module, we will develop reported (incurred) claims to ultimate.
 
 ### Exercise 1.2
 # Add a new column to the transactions_df data frame called incremental_incurred
 # with the incremental change to incurred value after each transaction.
-
-### Solution 1.2
-transactions_df <- transactions_df |>
-  mutate(
-    incremental_incurred = payment_amount + change_in_reserve
-  )
 
 #------ 1.2 Calculate one Value of the Reported Triangle ---------------------
 
@@ -59,14 +46,6 @@ transactions_df <- transactions_df |>
 # the start of the accident year + 45 months. Use functions ymd()/mdy() and
 # months() from lubridate)
 # 3) Calculate the cumulative incurred value for these transactions.
-
-### Solution 1.3
-transactions_2010_45m <- transactions_df |>
-  filter(
-    year(accident_date) == 2010,
-    evaluation_date <= ymd("2010-01-01") + months(45)
-  )
-sum(transactions_2010_45m$incremental_incurred)
 
 #------ 1.3 Calculate the Full Triangle Data --------------------------------
 
@@ -103,16 +82,6 @@ crossing(a = c(1, 2), b = c("x", "y"))
 #    (hint: find the last possible evaluation date by looking at the
 #    spreadsheet)
 
-### Solution 1.4
-triangle_df <- crossing(
-  accident_year = 2005:2014,
-  maturity = seq(21, 129, by = 12)
-) |>
-  mutate(cohort_start_date = ymd(paste0(accident_year, "-01-01"))) |>
-  mutate(evaluation_date = cohort_start_date + months(maturity) - days(1)) |>
-  filter(evaluation_date <= ymd("2014-01-01") + months(21))
-triangle_df
-
 ### Exercise 1.5
 # We can now calculate the cumulative incurred losses for each row triangle_df.
 # 1) Write a function calculate_cumulative_incurred() that takes as arguments
@@ -127,19 +96,6 @@ triangle_df
 # calculate_cumulative_incurred() function to ignore the other columns of the
 # triangle_df data frame)
 # 3) Add the cumulative_incurred column to the triangle_df data frame.
-
-### Solution 1.5
-calculate_cumulative_incurred <- function(accident_year, maturity, ...) {
-  max_eval_date <- ymd(paste0(accident_year, "-01-01")) + months(maturity)
-  df <- transactions_df |>
-    filter(
-      year(accident_date) == accident_year,
-      evaluation_date <= max_eval_date
-    )
-  sum(df$incremental_incurred)
-}
-cumulative_incurred <- pmap_dbl(triangle_df, calculate_cumulative_incurred)
-triangle_df$cumulative_incurred <- cumulative_incurred
 
 #----- 1.4 Pivot the Triangle Data ------------------------------------------
 
@@ -158,12 +114,6 @@ triangle_df$cumulative_incurred <- cumulative_incurred
 #   * values_from: the column to use for the values of the new data frame
 #   (cumulative_incurred)
 
-### Solution 1.6
-triangle <- triangle_df |>
-  select(-cohort_start_date, -evaluation_date) |>
-  pivot_wider(names_from = maturity, values_from = cumulative_incurred)
-triangle
-
 # When the triangle data is in a wide format, it is more appropriate to use a
 # matrix to store it. We can convert the triangle data frame to a matrix using
 # the as.matrix() function.
@@ -175,14 +125,6 @@ triangle
 # it to a matrix)
 # 2) Add the dimension names to the matrix. The dimension names should be
 # "accident_year" and "maturity".
-
-### Solution 1.7
-triangle_matrix <- as.matrix(triangle[, -1])
-dimnames(triangle_matrix) <- list(
-  accident_year = 2005:2014,
-  maturity = seq(21, 129, by = 12)
-)
-triangle_matrix
 
 ###### 2. Developing Claims to Ultimate ######################################
 
@@ -214,14 +156,6 @@ ata(triangle_matrix)
 # (hint: use the paste() function with the colnames() function to create the
 # column names)
 
-### Solution 2.1
-numerator <- triangle_matrix[, 2:ncol(triangle_matrix)]
-denominator <- triangle_matrix[, 1:(ncol(triangle_matrix) - 1)]
-ata_matrix <- numerator / denominator
-ata_matrix <- ata_matrix[-nrow(ata_matrix), ]
-colnames(ata_matrix) <- paste(colnames(triangle_matrix)[-ncol(triangle_matrix)], colnames(triangle_matrix)[-1], sep = "-")
-ata_matrix
-
 # The next step is to select the age-to-age factors, often an average
 # of the age-to-age factors from the age-to-age matrix.
 
@@ -231,10 +165,6 @@ ata_matrix
 # (hint: use the apply() function with the mean() function, and
 # na.rm = TRUE to ignore the missing values)
 
-### Solution 2.2
-smpl_ata <- apply(ata_matrix, 2, mean, na.rm = TRUE)
-smpl_ata
-
 ### Exercise 2.3
 # In many cases, the dollar-weighted age-to-age factors are used instead of the
 # simply weighted age-to-age factors.
@@ -243,17 +173,6 @@ smpl_ata
 # previous column.
 # (hint: take subsets of the triangle matrices, and make sure to replace the
 # remove the extra value in the denominator, for example by setting it to NA)
-
-### Solution 2.3
-triangle_matrix_numerator <- triangle_matrix[-nrow(triangle_matrix), 2:ncol(triangle_matrix)]
-triangle_matrix_denominator <- triangle_matrix[-nrow(triangle_matrix), 1:(ncol(triangle_matrix) - 1)]
-triangle_matrix_denominator[is.na(triangle_matrix_numerator)] <- NA
-triangle_matrix_denominator
-
-vwgt_ata <- apply(triangle_matrix_numerator, 2, sum, na.rm = TRUE) / apply(triangle_matrix_denominator, 2, sum, na.rm = TRUE)
-
-names(vwgt_ata) <- names(smpl_ata)
-vwgt_ata
 
 #----- 2.2 Age-to-Ultimate Factors ------------------------------------------
 
@@ -265,11 +184,6 @@ vwgt_ata
 # (hint: use the function cumprod() to calculate the cumulative products
 # and the rev() function to reverse the order of the elements)
 
-### Solution 2.4
-selected_ata <- vwgt_ata
-age2ult <- rev(cumprod(rev(selected_ata)))
-age2ult
-
 #----- 2.3 Ultimate Claims --------------------------------------------------
 
 # The final step is to calculate the ultimate claims.
@@ -280,13 +194,6 @@ age2ult
 # The data frame should have two columns: maturity and the corresponding
 # age-to-ultimate factor. Add a row with the last possible maturity (129)
 # and the tail factor (1).
-
-### Solution 2.5
-age2ult_df <- tibble(
-  maturity = seq(21, 129, by = 12),
-  age2ult = c(age2ult, 1)
-)
-age2ult_df
 
 ### Exercise 2.6
 # 1) Filter the triangle_df data frame to keep only the latest
@@ -300,10 +207,3 @@ age2ult_df
 # (hint: new_df <- left_join(left_df, right_df, by = "joining_column")
 # 3) Calculate the ultimate claims by multiplying the cumulative incurred
 # column by the age-to-ultimate factor column.
-
-### Solution 2.6
-triangle_df |>
-  group_by(accident_year) |>
-  filter(maturity == max(maturity)) |>
-  left_join(age2ult_df, by = c("maturity" = "maturity")) |>
-  mutate(ultimate = cumulative_incurred * age2ult)
