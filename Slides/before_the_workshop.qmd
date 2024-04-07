@@ -1,0 +1,108 @@
+---
+title: "Before the Workshop"
+subtitle: "Actuarial Data Manipulation with R -- CAS Spring Meeting 2024"
+author: Denis Dreano
+theme: metropolis
+date: 5/5/2024
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 8pt
+execute:
+  echo: true
+---
+
+## Content
+
+1. Install R and RStudio
+2. Install the required packages
+3. Download the workshop material
+4. Test your setup
+5. Troubleshooting
+6. Refresh your R skills
+
+## Install R and RStudio
+
+### You will need to bring a laptop with R and RStudio installed
+
+* Case 1: You bring your personal laptop
+  - Install R from [CRAN](https://cran.r-project.org/)
+  - Install RStudio from [RStudio](https://www.rstudio.com/products/rstudio/download/)
+
+* Case 2: You use a laptop provided by your employer
+  - Check with your IT department how to install R and RStudio
+
+## Install the required packages
+
+Open the R console in RStudio and run the following command:
+
+```r
+install.packages(c("tidyverse", "lubridate", "readxl", "openxlsx", "actuar"))
+```
+
+## Download the workshop material
+
+1. Go to the [GitHub repository](0) of the workshop
+2. Click on the green button "Code" and select "Download ZIP"
+3. Unzip the downloaded file in a folder of your choice
+
+## Test your setup
+
+Open the R console in RStudio and run the following command:
+
+```r
+library(tidyverse)
+library(lubridate)
+library(readxl)
+library(openxlsx)
+library(actuar)
+```
+
+## Troubleshooting
+
+If you encounter any issue, please reach out to me by email at:
+
+`denis.dreano@protonmail.ch`
+
+## Refresh your R skills
+
+Make sure you are comfortable with the basic syntax of R:
+
+- assignment (`<-`)
+- functions
+- control structures (if, else, for, while)
+- basic operations (+, -, *, /, ^)
+- logical operators (<, >, ==, !=, &, |)
+- missing values (`NA`)
+
+If you're not familiar with RStudio, check out:
+
+* this 6-minute video [RStudio for the Total Beginner](https://youtu.be/FIrsOBy5k58?si=OTpgpTeNd3Gux1bF)
+* The RStudio cheatsheet in the `Cheatsheets/` folder
+
+If you need a refresher, I included a short R tutorial in the `Slides/` folder
+of the workshop material.
+
+If you are not familiar with R, you can follow the free online course
+[Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r) on
+DataCamp.
+
+## Get familiar with RStudio and the workshop material
+
+- Open RStudio and explore the interface
+  - Create a new project (File > New Project)
+  - Create a new R script (File > New File > R Script)
+  - Run code (Ctrl + Enter)
+
+- Open the workshop material in RStudio
+  * `Data/`: Raw data you will need to 
+  * `References/`: Original source for the rate indication
+  * `Slides/`: This slide and other resources
+  * `Videos/`: Introductory videos to the workshop and each module
+  * `Workshop/`: The exercises and the solutions
+  
+
+
+
+
+
