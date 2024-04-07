@@ -1,4 +1,11 @@
-
+---
+title: "Actuarial Data Manipulation with R"
+subtitle: "CAS Spring Meeting 2024 -- Workshop"
+author: Denis Dreano
+theme: metropolis
+date: 5/5/2024
+format: beamer
+---
 Resources:
 
 * Rstudio cheatsheet

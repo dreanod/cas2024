@@ -1,0 +1,159 @@
+---
+title: "Module 3 -- Loss Development"
+subtitle: "Actuarial Data Manipulation with R -- CAS Spring Meeting 2024"
+author: Denis Dreano
+theme: metropolis
+date: 5/5/2024
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 8pt
+execute:
+  echo: true
+---
+
+## Content
+
+**Goals:** Using claim transaction data, calculate the loss development
+triangles and estimate ultimate losses.
+
+**Content:**
+
+* Data Manipulation with `dplyr` and `tidyr`:
+  - `left_join()`
+  - `pivot_wider()`
+  - `crossing()`
+* Matrices
+  - subsetting
+  - `apply()`
+* Iterations with `purrr`:
+  - `pmap_dbl()`
+  
+## Data Manipulation with `dplyr`: `left_join()`
+
+```{r}
+library(dplyr)
+claim_df <- tibble(policy_id = c(1, 1, 2, 2, 3),
+                   claim_amount = c(100, 200, 300, 400, 500))
+policy_df <- tibble(policy_id = c(1, 2, 3),
+                    policy_type = c("auto", "home", "auto"))
+left_join(claim_df, policy_df, by = "policy_id")
+```
+
+## Data Manipulation with `tidyr`: `crossing()`
+
+```{r}
+library(tidyr)
+crossing(
+  accident_year = 2010:2011,
+  maturity = seq(12, 36, by = 12)
+)
+```
+
+## Data Manipulation with `tidyr`: `pivot_wider()`
+
+```{r}
+library(tidyr)
+triangle_df <- tibble(
+  accident_year = c(2010, 2010, 2010, 2011, 2011),
+  maturity = c(12, 24, 36, 12, 24),
+  cumulative_paid = c(100, 200, 300, 400, 500)
+)
+triangle_df |>
+  pivot_wider(names_from = maturity, values_from = cumulative_paid)
+```
+
+## Matrices: Creation
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+triangle_matrix <- matrix(
+  c(100, 200, 300, 400, 500, NA), nrow = 2
+)
+triangle_matrix
+dimnames(triangle_matrix) <- list(
+  accident_year = c(2010, 2011),
+  maturity = c(12, 24, 36)
+)
+triangle_matrix
+```
+:::
+::: {.column width="50%"}
+
+```{r}
+rownames(triangle_matrix)
+colnames(triangle_matrix)
+nrow(triangle_matrix)
+ncol(triangle_matrix)
+```
+:::
+::::
+
+## Matrices: Subsetting
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+triangle_matrix[1, 2]
+triangle_matrix["2010", "24"]
+triangle_matrix[1, ]
+triangle_matrix[, 2]
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+triangle_matrix[1:2, 2:3]
+triangle_matrix[, -1]
+```
+
+```{r}
+triangle_matrix[, -nrow(triangle_matrix)]
+```
+
+:::
+
+::::
+
+## Matrices: `apply()`
+
+```{r}
+apply(triangle_matrix, 1, sum)
+apply(triangle_matrix, 2, sum)
+```
+
+## Iterations with `purrr`: `pmap()`
+
+```{r}
+library(purrr)
+policy_df <- tibble(policy_id = c(1, 2, 3),
+                    policy_type = c("auto", "home", "auto"))
+calculate_premium <- function(policy_type, ...) {
+  switch(policy_type,
+         auto = 100,
+         home = 200)
+}
+pmap_dbl(policy_df, calculate_premium)
+```
+
+## References
+
+* Cheat sheets in `References/`
+  - `data-transformation.pdf`
+  - `base-r-cheat-sheet.pdf`
+  - `purrr.pdf`
+
+* [Wickham, H. et al. *R for Data Science* (r4ds.hadley.nz)](https://r4ds.hadley.nz/)
+  - [Chap. 3 Data Transformation](https://r4ds.hadley.nz/data-transform.html#groups)
+  - [Chap. 5 Data Tidying](https://r4ds.hadley.nz/data-tidy)
+
+* [Wickham, H. *Advanced R* (adv-r.hadley.nz)](https://adv-r.hadley.nz/)
+  - [Chap. 3 Vectors](https://adv-r.hadley.nz/vectors-chap.html)
+  - [Chap. 4 Subsetting](https://adv-r.hadley.nz/subsetting.html)
+  - [Chap. 9 Functionals](https://adv-r.hadley.nz/functionals.html)

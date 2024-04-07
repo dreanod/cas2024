@@ -1,0 +1,161 @@
+---
+title: "Module 1 -- Rate Indication"
+subtitle: "Actuarial Data Manipulation with R -- CAS Spring Meeting 2024"
+author: Denis Dreano
+theme: metropolis
+date: 5/5/2024
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 8pt
+execute:
+  echo: true
+---
+
+## Content
+
+**Goal:** Reproduce the main calculations in the final rate indication exhibit.
+
+**Content:**
+
+* Quick Introduction to R and RStudio
+* Vector
+* Data Frame and Tibbles
+* Data Manipulations with `dplyr`:
+  - `mutate()`
+  - `summarize()`
+  - `filter()`
+
+## Getting Started
+
+* Open the Workshop folder as a new RStudio project
+* Open `Workshop/part1_exercises_indication.R` and `Workshop/part1_solutions_indication.R`
+* Useful shortcuts:
+  - `Ctrl + Enter` to run a line or a selection
+  - `F1` to get help on a function
+  - `F2` to see what is in a variable
+  - to restart the R session: `Ctrl + Shift + F10`
+* Cheatsheets in `References/` folder:
+  - `RStudio` Cheatsheet
+  - Base R Cheatsheet
+
+## Creating Vectors
+
+* A vector is a one-dimensional array that can hold numeric, character, or logical data.
+
+```{r}
+# Create a numeric vector
+x <- 1:5
+premium <- c(100, 200, 300, 400, 500)
+# Create a character vector
+policy_id <- c("policy1", "policy2", "policy3", "policy4", "policy5")
+# Create a logical vector
+is_auto_policy <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+```
+
+## Subsetting Vectors
+
+* You can access elements of a vector using square brackets `[]`.
+```{r}
+# Access the first element
+premium[1]
+# Access the second and third elements
+premium[2:3]
+# Access the last element
+premium[length(premium)]
+```
+
+## Named Vectors
+
+* You can assign names to the elements of a vector using the `names()` function.
+```{r}
+# Create a named vector
+premium <- c(100, 200, 300, 400, 500)
+names(premium) <- c("policy1", "policy2", "policy3", "policy4", "policy5")
+premium
+```
+
+## Vectorized Operations
+
+* R supports vectorized operations, which allow you to perform operations on entire vectors at once.
+```{r}
+# Add two vectors element-wise
+premium <- c(100, 200, 300, 400, 500)
+loss <- c(50, 100, 150, 200, 250)
+loss_ratio <- loss / premium
+loss_ratio
+```
+
+## Data Frames
+
+* A data frame is a two-dimensional array that can hold multiple types of data.
+```{r}
+# Create a data frame
+library(dplyr)
+df <- tibble(
+  policy_id = c("policy1", "policy2", "policy3"),
+  premium = c(100, 200, 300),
+  loss = c(50, 100, 150)
+)
+```
+
+* You can access columns of a data frame using the `$` operator.
+```{r}
+# Access the name column of df
+df$policy_id
+
+# Create a new column in df
+df$is_auto <- c(TRUE, FALSE, TRUE)
+```
+
+## Data Manipulation with `dplyr`: `mutate()`
+
+```{r}
+# Mutate/create a new column based on existing columns
+df_mutated <- mutate(df, loss_ratio = loss / premium)
+df_mutated
+```
+
+
+## Data Manipulation with `dplyr`: `select()`
+
+```{r}
+# Select specific columns
+df_selected <- select(df, premium, loss)
+df_selected
+
+# Select columns and rename
+select(df, gross_written_premium = premium, incurred_loss = loss)
+
+# Remove a column
+select(df, -loss)
+```
+
+## Data Manipulation with `dplyr`: `summarize()`
+
+```{r}
+# Summarize data
+df_summarized <- summarize(
+  df,
+  total_premium = sum(premium), 
+  total_loss = sum(loss),
+  avg_loss_ratio = mean(loss / premium)
+)
+df_summarized
+```
+
+* The `dplyr` package provides a set of functions for data manipulation.
+
+## Other Resources
+
+* Cheat sheets in `References/`
+  - `rstudio-ide.pdf`
+  - `base-r-cheat-sheet.pdf`
+  - `data-transformation.pdf`
+
+* [Wickham, H. et al. *R for Data Science* (r4ds.hadley.nz)](https://r4ds.hadley.nz/)
+  - [Chap. 3 Data Transformation](https://r4ds.hadley.nz/data-transform.html#groups)
+
+* [Wickham, H. *Advanced R* (adv-r.hadley.nz)](https://adv-r.hadley.nz/)
+  - [Chap. 3 Vectors](https://adv-r.hadley.nz/vectors-chap.html)
+  - [Chap. 4 Subsetting](https://adv-r.hadley.nz/subsetting.html)

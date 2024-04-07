@@ -1,0 +1,170 @@
+---
+title: "Module 2 -- Earned Premium"
+subtitle: "Actuarial Data Manipulation with R -- CAS Spring Meeting 2024"
+author: Denis Dreano
+theme: metropolis
+date: 5/5/2024
+format:
+  beamer:
+    aspectratio: 169
+    fontsize: 8pt
+execute:
+  echo: true
+---
+
+## Content
+
+**Goal:** Calculate the earned premium displayed in the rate indication,
+from the policy data.
+
+**Content:**
+
+* Loading and exploring tabular data (data frames)
+* Data manipulations with `dplyr`:
+  - `filter()`
+  - `group_by()`
+* Manipulating dates with `lubridate`
+* The pipe operator `|>`
+* Iterating calculation with `purrr`
+  - `map()`
+  - `map_dbl()`
+  - `map_dfr()`
+
+## Loading Policy Data
+
+```{r}
+library(readr)
+policy_data <- read_csv("../Data/policy_table.csv")
+policy_data
+```
+
+## Exploring Data
+
+### Other commands to have a quick look at the data:
+
+```{r}
+#| eval: false
+str(policy_data)
+
+summary(policy_data)
+
+library(dplyr)
+glimpse(policy_data)
+```
+
+## Manipulating Data with `dplyr`: `filter()`
+
+Use the `filter()` function from the `dplyr` package to filter rows based on
+a condition.
+
+```{r}
+library(dplyr); library(lubridate)
+
+# Filter the data frame for a specific policy type
+policy_data_2010 <- filter(policy_data, year(inception_date) == 2010)
+
+# Filter the data frame for policies with a premium greater than 1000
+policy_data_high_premium <- filter(policy_data, premium > 1500)
+
+# Combine multiple conditions with logical operators
+policy_data_combined <- filter(
+  policy_data, year(inception_date) & premium > 1000
+)
+```
+
+## Manipulating Data with `dplyr`: `group_by()`
+
+Use the `group_by()` function from the `dplyr` package to group rows based on
+a variable.
+
+```{r}
+# Group the data frame by policy type
+policy_data_grouped <- group_by(policy_data, year(inception_date))
+
+# Summarize the data by group
+policy_data_summary <- summarize(policy_data_grouped, avg_premium = mean(premium))
+
+head(policy_data_summary)
+```
+
+### One can also group and mutate, or group and filter.
+
+## Manipulating Dates with `lubridate`
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+### Create a date object:
+```{r}
+library(lubridate)
+inception_date <- ymd("2022-01-01")
+inception_date <- mdy("12/31/2022")
+```
+
+### Extract components of a date
+```{r}
+year(inception_date)
+month(inception_date)
+day(inception_date)
+```
+:::
+
+::: {.column width="60%"}
+### Add or subtract time intervals
+```{r}
+inception_date + years(1)
+inception_date - days(7)
+```
+
+### Calculate the difference between two dates:
+```{r}
+diff_days <- (today() %--% inception_date) / days(1)
+```
+:::
+
+::::
+
+
+## The Pipe Operator
+
+* The pipe operator `|>` allows you to chain multiple operations together in a
+readable way.
+
+```{r}
+# without pipe
+policy_data_grouped <- group_by(policy_data, year(inception_date))
+policy_data_summary <- summarize(policy_data_grouped, avg_premium = mean(premium))
+
+# with pipe
+policy_data_summary <- policy_data |>
+  group_by(year(inception_date)) |>
+  summarize(avg_premium = mean(premium))
+```
+
+
+## Iterating with `purrr`: `map()`, `map_dbl()`, `map_dfr()`
+
+The `purrr` package provides functions for iterating over data structures.
+
+```{r}
+library(purrr)
+map(c(1, 2, 3), function(x) x * 2) |> str()
+map_dbl(c(1, 2, 3), function(x) x * 2)
+map_dfr(c(1, 2, 3), function(x) tibble(x = x, y = x * 2))
+```
+
+## References
+
+* Cheat sheets in `References/`
+  - `data-import.pdf`
+  - `data-transformation.pdf`
+  - `lubridate.pdf`
+  - `purrr.pdf`
+
+* [Wickham, H. et al. *R for Data Science* (r4ds.hadley.nz)](https://r4ds.hadley.nz/)
+  - [Chap. 17 Dates and Times](https://r4ds.hadley.nz/datetimes)
+  - [Chap. 3 Data Transformation](https://r4ds.hadley.nz/data-transform.html#groups)
+  - [Chap. 4 Workflow Style](https://r4ds.hadley.nz/workflow-style.html#sec-pipes)
+* [Wickham, H. *Advanced R* (adv-r.hadley.nz)](https://adv-r.hadley.nz/)
+  - [Chap. 9 Functionals](https://adv-r.hadley.nz/functionals.html#functionals)

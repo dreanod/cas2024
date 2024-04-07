@@ -1,0 +1,169 @@
+
+
+
+
+
+
+# Appendix
+
+## Basic R Syntax
+
+### Install R
+
+If you bring your personal laptop, or have admin right on your machine:
+
+ - Download and install the latest version of R from the [CRAN website](https://cran.r-project.org/).
+ - Follow the installation instructions for your operating system (Windows, macOS, or Linux).
+
+If you don't, get in touch with your IT department.
+
+
+### Comments
+Comments in R are preceded by the `#` symbol. They are used to annotate code for readability and documentation purposes.
+
+```R
+# This is a comment in R
+```
+
+### Variables
+
+Variables in R are used to store data values. Variable names can consist of letters, numbers, and periods (.), but cannot start with a number or contain spaces. Variable assignment is done using the <- or = operator.
+
+```R
+Copy code
+x <- 10        # Assign 10 to variable x
+y <- "Hello"   # Assign "Hello" to variable y
+```
+
+### Data Types
+
+R supports various data types, including numeric, character, logical, factor, and more. Use the class() function to determine the data type of a variable.
+
+```R
+Copy code
+x <- 10        # Numeric
+y <- "Hello"   # Character
+z <- TRUE      # Logical
+```
+
+### Operators
+
+R supports arithmetic, relational, logical, and assignment operators. Here are some examples:
+
+```R
+# Arithmetic operators
+x + y    # Addition
+x - y    # Subtraction
+x * y    # Multiplication
+x / y    # Division
+x %% y   # Modulus
+x ^ y    # Exponentiation
+
+# Relational operators
+x == y   # Equal to
+x != y   # Not equal to
+x > y    # Greater than
+x < y    # Less than
+x >= y   # Greater than or equal to
+x <= y   # Less than or equal to
+
+# Logical operators
+x && y   # Logical AND
+x || y   # Logical OR
+!x       # Logical NOT
+
+# Assignment operators
+x <- y   # Assign y to x
+x = y    # Same as above
+```
+
+### Control Structures
+
+R supports various control structures for flow control, including if-else statements, for loops, while loops, and more.
+
+```R
+# If-else statement
+if (condition) {
+  # Code to execute if condition is TRUE
+} else {
+  # Code to execute if condition is FALSE
+}
+````
+
+# For loop
+````R
+for (i in 1:5) {
+  # Code to execute for each iteration
+}
+````
+
+# While loop
+````R
+while (condition) {
+  # Code to execute while condition is TRUE
+}
+````
+
+### Functions
+
+Functions in R are defined using the function() keyword. They can take arguments and return values.
+
+# Function definition
+
+```R
+my_function <- function(arg1, arg2) {
+  # Code to execute
+  result <- arg1 + arg2
+  return(result)
+}
+````
+
+# Function call
+
+````R
+my_result <- my_function(10, 20)
+````
+
+## Primer/Refresher on Using RStudio
+
+## Introduction
+
+RStudio is an integrated development environment (IDE) for the R programming language, providing a user-friendly interface and a suite of tools to enhance your R programming experience. This primer will guide you through the basics of using RStudio for data analysis and statistical computing.
+
+## Installation
+To get started with RStudio, you'll need to install both R and RStudio. Here's how to do it:
+
+**Install RStudio:**
+   - Download and install RStudio Desktop from the [RStudio website](https://www.rstudio.com/products/rstudio/download/).
+   - Choose the appropriate installer for your operating system (Windows, macOS, or Linux).
+   - Follow the installation instructions to complete the setup.
+
+## Getting Started
+Once you have R and RStudio installed, you can launch RStudio and start using it:
+
+1. **Open RStudio:**
+   - Double-click the RStudio icon on your desktop or launch it from the Start menu (Windows) or Applications folder (macOS).
+
+2. **Interface Overview:**
+   - RStudio consists of four main panes: the **Console**, **Script Editor**, **Environment/History**, and **Files/Plots/Packages/Help** pane.
+   - The **Console** is where you can type R commands and see their output.
+   - The **Script Editor** is where you write and edit R scripts (`.R` files).
+   - The **Environment** pane displays information about the R objects (variables, functions) in your workspace.
+   - The **Files** pane allows you to navigate your file system and access files and directories.
+   - You can customize the layout of panes and tabs according to your preferences.
+
+3. **Running Code:**
+   - You can run code in the Console by typing directly or by copying and pasting from the Script Editor.
+   - To run a single line of code, press `Ctrl + Enter` (Windows/Linux) or `Cmd + Enter` (macOS).
+   - To run multiple lines of code, select them and press `Ctrl + Enter` or `Cmd + Enter`.
+
+## Useful Features
+
+Here are some useful features of RStudio to enhance your workflow:
+
+1. **Syntax Highlighting:** RStudio provides syntax highlighting for R code, making it easier to read and understand.
+
+2. **Code Autocompletion:** Press `Tab` to autocomplete variable names, function names, and arguments.
+
+3. **Integrated Help:** Use the Help pane to access documentation, manuals, and package vignettes directly within RStudio.
+

@@ -1,0 +1,85 @@
+---
+title: "Introduction to Actuarial Data Manipulation with R -- Workshop"
+subtitle: "CAS Spring Meeting 2024"
+author: Denis Dreano
+theme: metropolis
+date: 5/5/2024
+format: beamer
+---
+
+## Denis Dreano
+
+- Pricing actuary @Swiss Re since 2018
+- Currently, Lead Actuarial Models and Architecture
+- Focus on Data Models for actuarial applications
+- Writing actuarial R applications and packages
+- [LinkedIn](https://www.linkedin.com/in/denis-dreano/)
+
+## Why this Workshop
+
+* Programming is part of the actuarial profession
+* Lack of Formal Training in Programming Techniques
+* Inefficient workflows
+
+## Learning Objectives
+
+* Select the most appropriate R data structure to represent different types of actuarial concepts: vector, list, data frame, array, date, etc.
+* Write R scripts that load, manipulate and export insurance data, using state-of-the-art libraries: tidyverse, dplyr, lubridate, purrr, etc.
+* Perform simple standard actuarial procedures in R: aggregate claim/policy data, calculate summary ratios, calculate and develop claim triangles, etc.
+
+## Goal
+
+Reproduce parts of realistic actuarial process:
+
+* Automobile Rate Indication
+  - Appendix A from Werner and Modlin, *Basic Ratemaking*. 
+    - `References/Werner Basic Ratemaking - Appendix A - Auto Indication.pdf`
+  - Excel version:
+    - `References/Appendix A - Auto Indication.xlsx`
+
+By the end of the session:
+
+* Better understanding of the R language and modern libraries
+* Understanding of modeling and manipulation fe
+
+It will allow you to:
+
+* Be more efficient when programming in R
+* Automate more of your workflow
+* Collaborate more effectively with application developers and data engineers
+
+## Disclaimers
+
+* Expect some level of programming experience R or other language
+  - R refresher in `Slides/R_basics.pdf`
+* I recommend using RStudio for the workshop
+  - Some notes in `Slides/RStudio_basics.pdf`
+* Will focus on the data and data manipulation
+  - No coverage of charting libraries or building applications
+
+## Organization
+
+Three parts:
+
+* 12:30 Module 1: Rate Indication
+* 13:30 Module 2: Earned Premium
+* 14:30 Module 3: Claim Development
+* 15:30 Discussion and Conclusion
+
+Each module will be organized as follows:
+
+* 10 minutes of introduction
+* 40 minutes of exercises
+  - Open the "question" R scripts in `Workshop/` folder
+  - Try to solve the questions individually or in a small group
+  - Don't spend too much time on each question. After 5 minute look at the "solution" script and move on to the next question.
+* 10 minutes of discussions
+
+## Resources
+
+* `Data/`: Raw data you will need to 
+* `References/`: Original source for the rate indication
+* `Slides/`: This slide and other resources
+* `Videos/`
+* `Workshop/`: The exercises and the solutions
+
