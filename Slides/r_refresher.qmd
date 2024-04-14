@@ -8,6 +8,7 @@ format:
   beamer:
     aspectratio: 169
     fontsize: 8pt
+    urlcolor: blue
 execute:
   echo: true
 ---
@@ -87,9 +88,9 @@ rep_vector <- rep(1, times = 5)
 
 ```R
 # Access the first element of a vector
-first_element <- numeric_vector[1]
+numeric_vector[1]
 # Access the last element of a vector
-last_element <- numeric_vector[length(numeric_vector)]
+numeric_vector[length(numeric_vector)]
 ```
 
 ### Vectors of the same type can be combined using the c() function.

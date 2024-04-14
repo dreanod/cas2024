@@ -8,20 +8,23 @@ format:
   beamer:
     aspectratio: 169
     fontsize: 8pt
+    urlcolor: blue
 execute:
   echo: true
 ---
 
-## Content
+## Checklist
+
+Here a few steps to prepare for the workshop:
 
 1. Install R and RStudio
 2. Install the required packages
 3. Download the workshop material
 4. Test your setup
-5. Troubleshooting
-6. Refresh your R skills
+5. Refresh your R skills
+6. Get familiar with RStudio and the workshop material
 
-## Install R and RStudio
+## 1) Install R and RStudio
 
 ### You will need to bring a laptop with R and RStudio installed
 
@@ -32,7 +35,7 @@ execute:
 * Case 2: You use a laptop provided by your employer
   - Check with your IT department how to install R and RStudio
 
-## Install the required packages
+## 2) Install the required packages
 
 ### Install the `tidyverse` and `ChainLadder` packages
 
@@ -42,7 +45,7 @@ Open the R console in RStudio and run the following command:
 install.packages(c("tidyverse", "ChainLadder"))
 ```
 
-### Test your setup
+### Test the Installed Packages
 
 Open the R console in RStudio and run the following command:
 
@@ -56,14 +59,26 @@ library(ChainLadder)
 If you encounter any issue, please reach out to me by email at:
 `denis.dreano@protonmail.ch`
 
-## Download the workshop material
+## 3) Download the workshop material
 
-1. Go to the [GitHub repository](0) of the workshop
-2. Click on the green button "Code" and select "Download ZIP"
-3. Unzip the downloaded file in a folder of your choice
-4. Open the file `Actuarial-Data-Manipulation-with-R.Rproj` in RStudio
+1. Download the workshop material using [this link](https://github.com/dreanod/cas2024/releases/download/v1-alpha/cas2024.zip)
+2. Unzip the file `cas2024.zip` in a folder of your choice
+3. Open the file `cas2024.Rproj` with RStudio. This will open a new RStudio project with the workshop material.
 
-## Refresh your R skills
+## 4) Test your setup
+
+Open each of the following files in RStudio and run the code by clicking on the
+"Source" button (top right corner of the script editor), or with the keyboard
+shortcut `Ctrl + Shift + S`:
+
+- `Workshop/part1_solution_indication.R`
+- `Workshop/part2_solution_earned_premium.R`
+- `Workshop/part3_solution_claim_development.R`
+
+If you you see any error message, please reach out to me by email at:
+`denis.dreano@protonmail.ch`
+
+## 5) Refresh your R skills
 
 Make sure you are comfortable with the basic syntax of R:
 
@@ -74,11 +89,6 @@ Make sure you are comfortable with the basic syntax of R:
 - logical operators (<, >, ==, !=, &, |)
 - missing values (`NA`)
 
-If you're not familiar with RStudio, check out:
-
-* this 6-minute video [RStudio for the Total Beginner](https://youtu.be/FIrsOBy5k58?si=OTpgpTeNd3Gux1bF)
-* The RStudio cheatsheet in the `Cheatsheets/` folder
-
 If you need a refresher, I included a short R tutorial in the `Slides/` folder
 of the workshop material.
 
@@ -86,14 +96,14 @@ If you are not familiar with R, you can follow the free online course
 [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r) on
 DataCamp.
 
-## Get familiar with RStudio and the workshop material
+## 6) Get familiar with RStudio and the workshop material
 
-- Open RStudio and explore the interface
-  - Create a new project (File > New Project)
-  - Create a new R script (File > New File > R Script)
-  - Run code (Ctrl + Enter)
+If you're not familiar with RStudio, check out:
 
-- Open the workshop material in RStudio
+* this 6-minute video [RStudio for the Total Beginner](https://youtu.be/FIrsOBy5k58?si=OTpgpTeNd3Gux1bF)
+* The RStudio cheatsheet in the `Cheatsheets/` folder
+
+Open the workshop material in RStudio
   * `Data/`: Raw data you will need to 
   * `References/`: Original source for the rate indication
   * `Slides/`: This slide and other resources

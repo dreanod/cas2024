@@ -8,6 +8,7 @@ format:
   beamer:
     aspectratio: 169
     fontsize: 8pt
+    urlcolor: blue
 execute:
   echo: true
 ---
@@ -126,9 +127,6 @@ df_selected
 
 # Select columns and rename
 select(df, gross_written_premium = premium, incurred_loss = loss)
-
-# Remove a column
-select(df, -loss)
 ```
 
 ## Data Manipulation with `dplyr`: `summarize()`
@@ -143,8 +141,6 @@ df_summarized <- summarize(
 )
 df_summarized
 ```
-
-* The `dplyr` package provides a set of functions for data manipulation.
 
 ## Other Resources
 

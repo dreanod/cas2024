@@ -6,6 +6,7 @@ theme: metropolis
 date: 5/5/2024
 format:
   beamer:
+    urlcolor: blue
     aspectratio: 169
     fontsize: 8pt
 execute:
@@ -166,5 +167,6 @@ map_dfr(c(1, 2, 3), function(x) tibble(x = x, y = x * 2))
   - [Chap. 17 Dates and Times](https://r4ds.hadley.nz/datetimes)
   - [Chap. 3 Data Transformation](https://r4ds.hadley.nz/data-transform.html#groups)
   - [Chap. 4 Workflow Style](https://r4ds.hadley.nz/workflow-style.html#sec-pipes)
+
 * [Wickham, H. *Advanced R* (adv-r.hadley.nz)](https://adv-r.hadley.nz/)
   - [Chap. 9 Functionals](https://adv-r.hadley.nz/functionals.html#functionals)
