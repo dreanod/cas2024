@@ -15,7 +15,7 @@ execute:
 
 ## Checklist
 
-Here a few steps to prepare for the workshop:
+Here are few steps to prepare for the workshop:
 
 1. Install R and RStudio
 2. Install the required packages
@@ -61,7 +61,7 @@ If you encounter any issue, please reach out to me by email at:
 
 ## 3) Download the workshop material
 
-1. Download the workshop material using [this link](https://github.com/dreanod/cas2024/releases/download/v1-alpha/cas2024.zip)
+1. Download the workshop material using [this link](https://github.com/dreanod/cas2024/releases/download/v1-final/cas2024.zip)
 2. Unzip the file `cas2024.zip` in a folder of your choice
 3. Open the file `cas2024.Rproj` with RStudio. This will open a new RStudio project with the workshop material.
 
